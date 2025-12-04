@@ -19,19 +19,29 @@ import EventsController from '#controllers/events_controller'
   return { message: "Bienvenue sur mon API Adonis !" }
 })
 
+// router.post('/create', [ EventsController , 'create'])
+
 const eventsController = () => import('#controllers/events_controller')
  router
  .group(()=>{
   router.get('/', [eventsController, 'liste'])
+ router.post('/', [ EventsController, 'store']) 
+ router.put('//:id', [EventsController, 'update'])
  })
   .prefix('/events')
+  
+// router
+  // .group(() => {
+  //   // router.post('/events', [eventsController, 'store'])   // création
+  //   // édition
+  // })
+  // .use(async ({ auth }, next) => {
+  //   await auth.authenticate()  // protection
+  //   return next()
+  // })
 
-router
-  .group(() => {
-    router.post('/events', [EventsController, 'store'])   // création
-    router.put('/events/:id', [EventsController, 'update']) // édition
-  })
-  .use(async ({ auth }, next) => {
-    await auth.authenticate()  // protection
-    return next()
-  })
+//   router.group(() => {
+//   router.post('/profile', '#controllers/users_controller.profile')
+//   .use(middleware.auth())
+
+// }).prefix('/api')

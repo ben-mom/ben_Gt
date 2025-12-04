@@ -2,6 +2,8 @@ import { DateTime } from 'luxon'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 
 export default class Event extends BaseModel {
+  public static table = 'events'
+
   @column({ isPrimary: true })
   declare id: number
    @column()
@@ -9,11 +11,13 @@ export default class Event extends BaseModel {
 
   @column()
   declare catégorie: string | null
-
-  @column.date()
-  declare date: DateTime
+ @column()
+  declare  date: string| null
+  
   @column()
   declare lieux: string | null
+
+ 
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

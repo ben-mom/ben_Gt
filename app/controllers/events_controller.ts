@@ -1,30 +1,45 @@
  import type { HttpContext } from '@adonisjs/core/http'
  import Event from '#models/Event'
+import { EventValidator } from '#validators/event'
 
-export default class EventsController {
+
+export default class EventsController {  
     public async liste({response}: HttpContext ) {
         const events = await Event.all()
         return response.json(events)
     } 
     // POST /events
     public async store({ request, response }: HttpContext) {
-    const data = request.only(['title', 'name', 'lieux', 'categorie', 'date'])
+    try {
+      // 1. Validation des données
+      const data = await request.validateUsing(EventValidator)
 
-    const event = await Event.create(data)
+      // 2. Création dans la base
+      const event = await Event.create(data)
 
-    return response.created(event)
+      // 3. Réponse REST standard
+      return response.created({
+        message: 'Événement créé avec succès',
+        data: event,
+      })
+    } catch (error) {
+      // Gestion propre des erreurs
+      return response.badRequest({
+        message: 'Impossible de créer l’événement',
+        error: error.messages || error,
+      })
+    }
   }
-  // PUT /events/:id
-
-  
-     async update({ params, request, response }: HttpContext) {
+    // PUT /events/:id
+    
+  public async update({ params, request, response }: HttpContext) {
     const event = await Event.find(params.id)
 
     if (!event) {
       return response.notFound({ message: 'Event not found' })
     }
 
-    const data = request.only(['title', 'name', 'lieux', 'categorie', 'date'])
+    const data = request.only(['name', 'lieux', 'categorie', 'date'])
 
     event.merge(data)
     await event.save()
