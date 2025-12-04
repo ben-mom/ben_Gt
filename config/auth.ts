@@ -1,13 +1,14 @@
 import { defineConfig } from '@adonisjs/auth'
-import { basicAuthGuard, basicAuthUserProvider } from '@adonisjs/auth/basic_auth'
-import type { InferAuthenticators, InferAuthEvents, Authenticators } from '@adonisjs/auth/types'
+import type { InferAuthenticators, Authenticators } from '@adonisjs/auth/types'
+import type { InferAuthEvents } from '@adonisjs/auth/types'
+
 
 import { sessionGuard, sessionUserProvider } from '@adonisjs/auth/session'
-// import { tokensUserProvider } from '@adonisjs/auth/access_tokens'
 import { jwtGuard } from '@maximemrf/adonisjs-jwt/jwt_config'
 import { JwtGuardUser, BaseJwtContent } from '@maximemrf/adonisjs-jwt/types'
 import User from '#models/user'
 import env from '#start/env' 
+
 
  interface JwtContent extends BaseJwtContent {
   email: string

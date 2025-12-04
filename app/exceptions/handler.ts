@@ -15,7 +15,7 @@ export default class HttpExceptionHandler extends ExceptionHandler {
   async handle(error: unknown, ctx: HttpContext) {
     return super.handle(error, ctx)
   }
-
+  
   /**
    * The method is used to report error to the logging service or
    * the third party error monitoring service.
@@ -26,3 +26,6 @@ export default class HttpExceptionHandler extends ExceptionHandler {
     return super.report(error, ctx)
   }
 }
+
+
+

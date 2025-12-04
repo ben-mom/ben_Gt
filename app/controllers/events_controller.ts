@@ -46,7 +46,18 @@ export default class EventsController {
 
     return response.ok(event)
   }
+  // DELETE /events/:id
+  public async destroy({ params, response }: HttpContext) {
+    const event = await Event.find(params.id)
 
+    if (!event) {
+      return response.notFound({ message: 'Event not found' })
+    }
+
+    await event.delete()
+
+    return response.ok({ message: 'Event deleted successfully' })
+  }
 }
 
 
