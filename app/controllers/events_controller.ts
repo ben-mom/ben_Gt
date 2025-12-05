@@ -9,27 +9,22 @@ export default class EventsController {
         return response.json(events)
     } 
     // POST /events
-    public async store({ request, response }: HttpContext) {
-    try {
-      // 1. Validation des données
-      const data = await request.validateUsing(EventValidator)
-
-      // 2. Création dans la base
-      const event = await Event.create(data)
-
-      // 3. Réponse REST standard
-      return response.created({
-        message: 'Événement créé avec succès',
-        data: event,
-      })
-    } catch (error) {
-      // Gestion propre des erreurs
-      return response.badRequest({
-        message: 'Impossible de créer l’événement',
-        error: error.messages || error,
-      })
-    }
-  }
+     public async stores({ request, response }: HttpContext) {
+        try {
+          const data = await request.validateUsing(EventValidator)
+          const event = await Event.create(data)
+  
+          return response.created({
+            message: 'evenement créé avec succès',
+            data: event,
+          })
+        } catch (error) {
+          return response.badRequest({
+            message: 'Erreur lors de la création',
+            error: error.messages || error,
+          })
+        }
+      }
     // PUT /events/:id
     
   public async update({ params, request, response }: HttpContext) {

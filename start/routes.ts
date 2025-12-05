@@ -28,8 +28,9 @@ router.get('/', async () => {
 router
   .group(() => {
     router.get('/', [EventsController, 'liste'])
-    router.post('/', [EventsController, 'store'])
+    router.post('/', [EventsController, 'stores'])
     router.put('/:id', [EventsController, 'update'])
+    router.delete('/:id', [EventsController, 'destroy'])
   })
   .prefix('/events')
 
